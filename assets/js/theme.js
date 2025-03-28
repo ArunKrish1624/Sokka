@@ -682,4 +682,74 @@
         offset: 0
     });
 
+    //======= Registration Country Suggestion
+    const countries = [
+        "United States", "United Kingdom", "India", "Canada", "Australia",
+        "Germany", "France", "China", "Japan", "Brazil", "South Africa",
+        "Russia", "Mexico", "Italy", "Spain", "Netherlands", "Switzerland",
+        "Singapore", "Sweden", "Norway", "New Zealand", "South Korea"
+    ];
+    
+    let selectedIndex = -1;
+    
+    $("#country").on("input", function () {
+        let searchQuery = $(this).val().toLowerCase();
+        let countryList = $("#countryList");
+        countryList.empty();
+        selectedIndex = -1; // Reset selection on new input
+    
+        if (searchQuery) {
+            let filteredCountries = countries.filter(country =>
+                country.toLowerCase().includes(searchQuery)
+            );
+    
+            $.each(filteredCountries, function (index, country) {
+                let listItem = $("<li></li>").text(country).addClass("suggestion");
+                
+                // Click to select country
+                listItem.on("click", function () {
+                    $("#country").val($(this).text());
+                    countryList.empty();
+                });
+    
+                countryList.append(listItem);
+            });
+        }
+    });
+    
+    // Keyboard navigation (Arrow keys + Enter)
+    $("#country").on("keydown", function (e) {
+        let countryList = $("#countryList");
+        let items = countryList.children(".suggestion");
+    
+        if (items.length === 0) return; // Exit if no suggestions
+    
+        if (e.key === "ArrowDown") {
+            e.preventDefault(); // Prevent moving cursor down
+            selectedIndex = (selectedIndex + 1) % items.length;
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault(); // Prevent moving cursor up
+            selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+        } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (selectedIndex > -1) {
+                $("#country").val(items.eq(selectedIndex).text());
+                countryList.empty();
+            }
+        }
+    
+        items.removeClass("selected");
+        if (selectedIndex >= 0) {
+            items.eq(selectedIndex).addClass("selected");
+        }
+    });
+    
+    // Hide suggestions when clicking outside
+    $(document).on("click", function (event) {
+        if (!$(event.target).closest("#country").length) {
+            $("#countryList").empty();
+        }
+    });
+    
+
 })(window.jQuery);

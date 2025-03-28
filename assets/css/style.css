@@ -378,6 +378,13 @@ body {
   font-size: 18px;
   font-weight: 500;
   border-radius: 50px;
+  transition: all .6s ease-in-out;
+}
+
+.theme-btn.style-two:hover{
+  color: #e1e1e1;
+  background-color: #bf2169;
+  border: 1px solid #bf2169; 
 }
 
 /* Common Class */
@@ -5532,5 +5539,38 @@ button {
   padding: 21px 40px;
   font-size: 18px;
 }
+
+.autocomplete-list {
+  position: absolute; 
+  background: white; 
+  max-height: 210px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  width: calc(100% - 20px);
+  z-index: 1000;
+}
+
+.autocomplete-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.autocomplete-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.suggestion {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestion:hover,
+.suggestion.selected {
+  background-color: #007bff;
+  color: white;
+}
+
 
 /*# sourceMappingURL=style.css.map */
